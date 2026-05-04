@@ -1,0 +1,196 @@
+<!-- User: Handwriting Prediction Flow -->
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ThaiDigit AI - Settings</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "primary": "#3525cd",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-surface": "#213145",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "primary-fixed": "#e2dfff",
+                        "outline": "#777587",
+                        "surface-variant": "#d3e4fe",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#4f46e5",
+                        "outline-variant": "#c7c4d8",
+                        "on-surface-variant": "#464555",
+                        "secondary-container": "#dae2fd",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-secondary-fixed": "#131b2e",
+                        "on-secondary-container": "#5c647a",
+                        "secondary": "#565e74",
+                        "inverse-primary": "#c3c0ff",
+                        "tertiary-container": "#5e6163",
+                        "secondary-fixed": "#dae2fd",
+                        "on-tertiary-container": "#dadcde",
+                        "tertiary": "#46494b",
+                        "surface-container-low": "#eff4ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "surface-tint": "#4d44e3",
+                        "on-primary-container": "#dad7ff",
+                        "on-background": "#0b1c30",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-surface": "#0b1c30",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#dce9ff",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#0f0069"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "80px",
+                        "md": "24px",
+                        "gutter": "24px",
+                        "sm": "16px",
+                        "xs": "8px",
+                        "margin": "32px",
+                        "lg": "48px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "h1": ["Manrope"],
+                        "code": ["Space Grotesk"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h3": ["Manrope"],
+                        "h2": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h3": ["24px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "h2": ["32px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .canvas-grid {
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-background font-body-md text-on-background min-h-screen">
+    <!-- TopAppBar -->
+    <header
+        class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none sticky top-0 z-50">
+        <div class="flex justify-between items-center h-16 px-6 max-w-7xl mx-auto">
+            <div class="flex items-center gap-8">
+                <div class="text-xl font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400 font-h2">
+                    ThaiDigit AI
+                </div>
+                <nav class="hidden md:flex items-center gap-6 font-manrope antialiased text-sm font-medium">
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200 cursor-pointer"
+                        href="predictor.html">Predictor</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200 cursor-pointer"
+                        href="history.html">History</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200 cursor-pointer"
+                        href="learn.html">Learn</a>
+                    <a class="text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 pb-4 -mb-4 transition-colors duration-200 cursor-pointer"
+                        href="settings.html">Settings</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-indigo-500 transition-colors"
+                    data-icon="help">help</span>
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-indigo-500 transition-colors"
+                    data-icon="account_circle">account_circle</span>
+                <a href="login.html"
+                    class="flex items-center text-slate-500 hover:text-red-500 transition-colors ml-4 border-l border-slate-300 pl-4 gap-1">
+                    <span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+                    <span class="text-sm font-medium">Logout</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <div class="flex flex-col gap-6 max-w-3xl">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold font-h2 text-on-background">Settings</h1>
+            </div>
+            <div class="bg-white rounded-xl border border-outline-variant shadow-sm p-6 space-y-6">
+                <div>
+                    <h3 class="text-lg font-bold mb-2">Account Preferences</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-on-surface-variant mb-1">Display Name</label>
+                            <input type="text"
+                                class="w-full px-3 py-2 border border-outline-variant rounded-lg focus:ring-primary focus:border-primary"
+                                value="User">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-2">Interface</h3>
+                    <div class="flex items-center justify-between p-3 border border-outline-variant rounded-lg">
+                        <span class="font-medium text-on-surface">Dark Mode</span>
+                        <input type="checkbox" class="h-5 w-5 text-primary rounded focus:ring-primary">
+                    </div>
+                </div>
+                <button
+                    class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary-container transition-colors">Save
+                    Changes</button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="api.js"></script>
+    <script>ThaiDigitAPI.requireAuth();</script>
+</body>
+
+</html>

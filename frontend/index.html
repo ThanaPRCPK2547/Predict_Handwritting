@@ -1,0 +1,249 @@
+<!-- Portal: Choose Interface -->
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;600&amp;family=Space+Grotesk:wght@400&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#131b2e",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "inverse-primary": "#c3c0ff",
+                        "outline-variant": "#c7c4d8",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "tertiary-container": "#5e6163",
+                        "background": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "on-surface-variant": "#464555",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "secondary-fixed": "#dae2fd",
+                        "surface-variant": "#d3e4fe",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eaf1ff",
+                        "inverse-surface": "#213145",
+                        "surface-container-high": "#dce9ff",
+                        "on-error": "#ffffff",
+                        "primary-container": "#4f46e5",
+                        "primary-fixed": "#e2dfff",
+                        "surface-tint": "#4d44e3",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#46494b",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-dim": "#cbdbf5",
+                        "outline": "#777587",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-tertiary-container": "#dadcde",
+                        "on-background": "#0b1c30",
+                        "surface": "#f8f9ff",
+                        "primary": "#3525cd",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#565e74",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "on-secondary-container": "#5c647a",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "secondary-container": "#dae2fd",
+                        "surface-container": "#e5eeff",
+                        "on-primary-container": "#dad7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "lg": "48px",
+                        "md": "24px",
+                        "base": "4px",
+                        "sm": "16px",
+                        "margin": "32px",
+                        "xs": "8px"
+                    },
+                    "fontFamily": {
+                        "code": ["Space Grotesk"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h2": ["Manrope"],
+                        "h1": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h3": ["24px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "h2": ["32px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .bg-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+
+<body class="bg-background font-body-md text-on-background min-h-screen flex flex-col selection:bg-primary-fixed">
+    <header
+        class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-lg">visibility</span>
+            </div>
+            <span class="text-xl font-extrabold tracking-tight text-slate-900 font-h3">ThaiDigit AI</span>
+        </div>
+        <div class="flex items-center gap-xs">
+            <button class="p-2 rounded-full hover:bg-slate-50 transition-colors active:scale-95 duration-150">
+                <span class="material-symbols-outlined text-slate-500">notifications</span>
+            </button>
+            <button class="p-2 rounded-full hover:bg-slate-50 transition-colors active:scale-95 duration-150">
+                <span class="material-symbols-outlined text-slate-500">account_circle</span>
+            </button>
+        </div>
+    </header>
+    <main class="flex-grow pt-32 pb-xl px-md max-w-[1440px] mx-auto w-full flex flex-col items-center justify-center">
+        <div class="text-center mb-lg space-y-base">
+            <h1 class="font-h1 text-h1 text-on-surface">Cognitive Vision Architecture</h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Securely manage model performance and execute predictive analysis on Thai handwritten numerals through
+                our advanced neural processing gateway.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-lg w-full max-w-5xl">
+            <div
+                class="group relative flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+                <div class="h-48 relative overflow-hidden">
+                    <img alt="Prediction Interface Preview"
+                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105"
+                        data-alt="A macro shot of a sleek digital tablet showing a handwritten Thai numeral being analyzed by a grid of glowing blue neural network nodes. The lighting is sophisticated and cool-toned, with high-end SaaS aesthetics, showcasing a professional data-driven environment. Subtle light trails trace the stroke of the numeral '๑' against a clean, minimal white background. The atmosphere is precise and technologically advanced."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXK9sQRcCq6XidUECu9W882Q7fP3KV85PlvVUZl3eiO5L5CKvvmKc3UxCRrAb21kqKzal8_QICGKmAk0xCBdxMeddegB3mMf21IwLn4-T8Me1g_AWMFqTx6a3k-cjSVylUhIID8CmAI3K1qsglvERP1ByQWH_xjSC-FcF8w6Zd56buGE1VYlTBIO9BGDBvLOsUWZhhd_4b712YEuGznhMPfxqhWswlsp0cllDpd_wuOGMKgwvV34jYqk9_-rL970jXQb9iaMGaxqjc" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent">
+                    </div>
+                </div>
+                <div class="p-lg flex flex-col flex-grow">
+                    <div class="flex items-center gap-xs mb-sm">
+                        <div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center">
+                            <span class="material-symbols-outlined text-primary">draw</span>
+                        </div>
+                        <span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">Predictive
+                            Engine</span>
+                    </div>
+                    <h2 class="font-h2 text-h3 mb-base text-on-surface">Prediction Interface</h2>
+                    <p class="text-on-surface-variant mb-lg flex-grow">
+                        Direct access to the numeral recognition engine. Draw, upload, or batch process Thai handwritten
+                        characters for high-confidence AI analysis.
+                    </p>
+                    <a href="login.html"
+                        class="w-full bg-primary hover:bg-primary-container text-white py-sm rounded-lg font-h3 text-body-md transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-indigo-200 active:scale-95 duration-150">
+                        Enter Workspace
+                        <span class="material-symbols-outlined text-md">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="group relative flex flex-col bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300">
+                <div class="h-48 relative overflow-hidden">
+                    <img alt="Admin Console Preview"
+                        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105"
+                        data-alt="A clean, professional dashboard view with multiple floating cards displaying complex data visualizations and performance metrics. The color palette consists of deep indigos and soft greys against a bright, airy background. High-resolution bar charts and line graphs show model accuracy trends over time. The scene is illuminated by soft, diffused workspace lighting, emphasizing a sense of professional control and invisible intelligence."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOMZuZ4URMG47VLkfzlw7eHd6c0xl1l5Q97Opl1WBu9KrzdSAMW82u8kfBKs8XjNMTZZk9dUlmewVhZ5P40qSnkS5TaJVF4Pd6UjomGABOpRbkx3vtVeaXUO_tbdKMmNGxIWngpdiqrI625GLqqXOHl3TUftRM6BD94KefVU524G_KRKfKVfTFcKftLUPUIgKXZkiJZsDiKOPvx1AzOVTOZQgIwZh1sXXjWP23FkY0B4h1a8wtcWHKg2Zb5DEUCIpWk5rdUrTvkOjE" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent">
+                    </div>
+                </div>
+                <div class="p-lg flex flex-col flex-grow">
+                    <div class="flex items-center gap-xs mb-sm">
+                        <div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">admin_panel_settings</span>
+                        </div>
+                        <span class="font-label-caps text-label-caps text-secondary tracking-widest uppercase">System
+                            Management</span>
+                    </div>
+                    <h2 class="font-h2 text-h3 mb-base text-on-surface">Admin Console</h2>
+                    <p class="text-on-surface-variant mb-lg flex-grow">
+                        Monitor model accuracy, manage training datasets, and adjust hyper-parameters. Access real-time
+                        logs and performance telemetry.
+                    </p>
+                    <a href="login.html"
+                        class="w-full bg-on-surface hover:bg-on-surface-variant text-white py-sm rounded-lg font-h3 text-body-md transition-all flex items-center justify-center gap-2 shadow-md active:scale-95 duration-150">
+                        Enter Dashboard
+                        <span class="material-symbols-outlined text-md">analytics</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-md w-full max-w-5xl">
+            <div class="flex flex-col items-center text-center p-sm">
+                <span class="material-symbols-outlined text-primary mb-xs">verified_user</span>
+                <h4 class="font-h3 text-body-md">Enterprise Security</h4>
+                <p class="text-label-caps text-on-surface-variant">End-to-end encryption for all uploaded data</p>
+            </div>
+            <div class="flex flex-col items-center text-center p-sm">
+                <span class="material-symbols-outlined text-primary mb-xs">speed</span>
+                <h4 class="font-h3 text-body-md">Real-time Inference</h4>
+                <p class="text-label-caps text-on-surface-variant">Sub-100ms latency on all recognition tasks</p>
+            </div>
+            <div class="flex flex-col items-center text-center p-sm">
+                <span class="material-symbols-outlined text-primary mb-xs">neurology</span>
+                <h4 class="font-h3 text-body-md">Neural Precision</h4>
+                <p class="text-label-caps text-on-surface-variant">99.4% accuracy on Thai numeral datasets</p>
+            </div>
+        </div>
+    </main>
+    <footer
+        class="w-full py-8 px-6 mt-auto flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50 border-t border-slate-200">
+        <div class="flex flex-col items-center md:items-start gap-1">
+            <span class="text-lg font-bold text-slate-900 font-h3">PredictivePortal</span>
+            <p class="font-manrope text-sm text-slate-500">© 2024 Intelligence Systems. All rights reserved.</p>
+        </div>
+        <div class="flex gap-md">
+            <a class="font-manrope text-sm text-slate-500 hover:text-indigo-500 transition-colors" href="#">Privacy
+                Policy</a>
+            <a class="font-manrope text-sm text-slate-500 hover:text-indigo-500 transition-colors" href="#">Terms of
+                Service</a>
+            <a class="font-manrope text-sm text-slate-500 hover:text-indigo-500 transition-colors"
+                href="#">Documentation</a>
+            <a class="font-manrope text-sm text-slate-500 hover:text-indigo-500 transition-colors" href="#">Support</a>
+        </div>
+    </footer>
+</body>
+
+</html>

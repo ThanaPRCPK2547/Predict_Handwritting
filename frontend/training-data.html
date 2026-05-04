@@ -1,0 +1,277 @@
+<!-- Admin: Model Management -->
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>ThaiNumeral AI - Training Data</title>
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Material Symbols -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#4f46e5",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-container": "#dae2fd",
+            "on-surface-variant": "#464555",
+            "outline-variant": "#c7c4d8",
+            "on-tertiary": "#ffffff",
+            "primary": "#3525cd",
+            "on-error": "#ffffff",
+            "background": "#f8f9ff",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#c3c0ff",
+            "surface-variant": "#d3e4fe",
+            "primary-fixed": "#e2dfff",
+            "secondary-fixed-dim": "#bec6e0",
+            "outline": "#777587",
+            "surface-dim": "#cbdbf5",
+            "error-container": "#ffdad6",
+            "inverse-surface": "#213145",
+            "on-background": "#0b1c30",
+            "surface-tint": "#4d44e3",
+            "on-primary-container": "#dad7ff",
+            "on-secondary-fixed-variant": "#3f465c",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed": "#191c1e",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary-fixed": "#0f0069",
+            "on-primary": "#ffffff",
+            "tertiary-fixed": "#e0e3e5",
+            "surface-container": "#e5eeff",
+            "surface": "#f8f9ff",
+            "surface-container-high": "#dce9ff",
+            "on-error-container": "#93000a",
+            "on-primary-fixed-variant": "#3323cc",
+            "tertiary-fixed-dim": "#c4c7c9",
+            "on-surface": "#0b1c30",
+            "inverse-primary": "#c3c0ff",
+            "secondary": "#565e74",
+            "on-secondary-container": "#5c647a",
+            "on-secondary-fixed": "#131b2e",
+            "on-tertiary-fixed-variant": "#444749",
+            "surface-container-low": "#eff4ff",
+            "tertiary": "#46494b",
+            "on-tertiary-container": "#dadcde",
+            "secondary-fixed": "#dae2fd",
+            "tertiary-container": "#5e6163"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "32px",
+            "base": "4px",
+            "lg": "48px",
+            "xs": "8px",
+            "sm": "16px",
+            "gutter": "24px",
+            "xl": "80px",
+            "md": "24px"
+          },
+          "fontFamily": {
+            "h2": ["Manrope"],
+            "body-md": ["Inter"],
+            "h3": ["Manrope"],
+            "code": ["Space Grotesk"],
+            "label-caps": ["Inter"],
+            "body-lg": ["Inter"],
+            "h1": ["Manrope"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .code-font {
+      font-family: 'Space Grotesk', monospace;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background">
+  <div class="relative flex h-auto min-h-screen w-full flex-col bg-background group/design-root overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+      <!-- TopAppBar Shared Component -->
+      <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-outline-variant px-10 py-3 bg-surface">
+        <div class="flex items-center gap-4 text-on-surface">
+          <div class="size-6 text-primary">
+            <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+            </svg>
+          </div>
+          <h2 class="text-on-surface text-lg font-bold leading-tight tracking-[-0.015em]">ThaiNumeral AI Admin</h2>
+        </div>
+      </header>
+      <div class="flex flex-1">
+        <!-- Sidebar Shared Component Logic Integration -->
+        <aside class="flex w-72 flex-col justify-between border-r border-outline-variant bg-surface p-4">
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col mb-4">
+              <h1 class="text-on-surface text-base font-semibold leading-normal">ThaiNumeral AI</h1>
+              <p class="text-on-surface-variant text-xs font-normal leading-normal">V2.4.0-Production</p>
+            </div>
+            <nav class="flex flex-col gap-2">
+              <a class="flex items-center gap-3 px-3 py-2 text-on-surface hover:bg-surface-container-low transition-colors rounded-lg"
+                href="admin.html">
+                <div data-icon="Layout" data-size="24px" data-weight="fill">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                </div>
+                <p class="text-sm font-semibold leading-normal">Model Overview</p>
+              </a>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container-highest text-primary"
+                href="training-data.html">
+                <div data-icon="Database" data-size="24px" data-weight="regular">
+                  <span class="material-symbols-outlined">database</span>
+                </div>
+                <p class="text-sm font-medium leading-normal">Training Data</p>
+              </a>
+              <a class="flex items-center gap-3 px-3 py-2 text-on-surface hover:bg-surface-container-low transition-colors rounded-lg"
+                href="performance.html">
+                <div data-icon="ChartLine" data-size="24px" data-weight="regular">
+                  <span class="material-symbols-outlined">show_chart</span>
+                </div>
+                <p class="text-sm font-medium leading-normal">Performance</p>
+              </a>
+            </nav>
+          </div>
+          <div class="flex flex-col gap-1">
+            <a class="flex items-center gap-3 px-3 py-2 text-on-surface hover:bg-surface-container-low transition-colors rounded-lg"
+              href="#">
+              <div data-icon="Lifebuoy" data-size="24px" data-weight="regular">
+                <span class="material-symbols-outlined">help</span>
+              </div>
+              <p class="text-sm font-medium leading-normal">Support</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-on-surface hover:bg-surface-container-low transition-colors rounded-lg"
+              href="#">
+              <div data-icon="BookOpen" data-size="24px" data-weight="regular">
+                <span class="material-symbols-outlined">menu_book</span>
+              </div>
+              <p class="text-sm font-medium leading-normal">Documentation</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-error hover:bg-error-container transition-colors rounded-lg mt-4 border border-error-container"
+              href="login.html">
+              <div data-size="24px" data-weight="regular">
+                <span class="material-symbols-outlined">logout</span>
+              </div>
+              <p class="text-sm font-bold leading-normal">Logout</p>
+            </a>
+          </div>
+        </aside>
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto px-10 py-8">
+
+          <div class="flex flex-col gap-8 max-w-[1200px] mx-auto">
+            <div class="flex flex-col gap-2">
+              <p class="text-label-caps text-primary tracking-widest">DATASET</p>
+              <h1 class="text-on-surface text-4xl font-black leading-tight tracking-tight">Training Data Management</h1>
+              <p class="text-on-surface-variant text-body-md max-w-2xl">Upload and label new datasets to improve the
+                prediction model accuracy.</p>
+            </div>
+            <div
+              class="rounded-xl border border-outline-variant bg-surface p-8 text-center flex flex-col items-center justify-center min-h-[300px]"
+              id="uploadContainer">
+              <input type="file" id="datasetInput" class="hidden" accept=".zip,.csv" />
+              <span class="material-symbols-outlined text-6xl text-outline-variant mb-4 transition-colors"
+                id="uploadIcon">cloud_upload</span>
+              <h3 class="text-xl font-bold text-on-surface mb-2" id="uploadTitle">Upload Dataset</h3>
+              <p class="text-on-surface-variant mb-6" id="uploadDesc">Drop your .zip or .csv file containing labeled
+                images here.</p>
+              <button id="selectFileBtn"
+                class="px-6 py-2 bg-primary text-on-primary rounded-lg font-bold text-sm shadow-md hover:scale-[1.02] transition-transform">Select
+                File</button>
+            </div>
+
+            <script>
+              const selectFileBtn = document.getElementById('selectFileBtn');
+              const datasetInput = document.getElementById('datasetInput');
+              const uploadTitle = document.getElementById('uploadTitle');
+              const uploadDesc = document.getElementById('uploadDesc');
+              const uploadIcon = document.getElementById('uploadIcon');
+
+              selectFileBtn.addEventListener('click', () => {
+                datasetInput.click();
+              });
+
+              datasetInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                  const fileName = e.target.files[0].name;
+                  uploadTitle.innerText = "File Selected";
+                  uploadDesc.innerText = fileName;
+                  uploadIcon.innerText = "check_circle";
+                  uploadIcon.classList.remove("text-outline-variant");
+                  uploadIcon.classList.add("text-emerald-500");
+                  selectFileBtn.innerText = "Upload to Server";
+
+                  // Remove existing click listener and add new one
+                  const newBtn = selectFileBtn.cloneNode(true);
+                  selectFileBtn.parentNode.replaceChild(newBtn, selectFileBtn);
+
+
+                  newBtn.addEventListener('click', async () => {
+                    newBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm mr-2">refresh</span> Uploading...';
+                    newBtn.disabled = true;
+                    newBtn.classList.add('opacity-80');
+
+                    try {
+                      await ThaiDigitAPI.request('/health', { auth: false });
+                      uploadTitle.innerText = "Backend Connected";
+                      uploadDesc.innerText = "Dataset upload endpoint is not implemented yet.";
+                      newBtn.style.display = "none";
+                    } catch (error) {
+                      uploadTitle.innerText = "Upload Failed";
+                      newBtn.innerHTML = "Retry Upload";
+                      newBtn.disabled = false;
+                    }
+                  });
+                }
+              });
+            </script>
+          </div>
+
+        </main>
+      </div>
+    </div>
+  </div>
+  <script src="api.js"></script>
+  <script>ThaiDigitAPI.requireAuth({ admin: true });</script>
+</body>
+
+</html>

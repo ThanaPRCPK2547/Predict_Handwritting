@@ -1,0 +1,574 @@
+<!-- User: Handwriting Prediction Flow -->
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ThaiDigit AI - Predictor</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "primary": "#3525cd",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-surface": "#213145",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "primary-fixed": "#e2dfff",
+                        "outline": "#777587",
+                        "surface-variant": "#d3e4fe",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#4f46e5",
+                        "outline-variant": "#c7c4d8",
+                        "on-surface-variant": "#464555",
+                        "secondary-container": "#dae2fd",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "on-secondary-fixed": "#131b2e",
+                        "on-secondary-container": "#5c647a",
+                        "secondary": "#565e74",
+                        "inverse-primary": "#c3c0ff",
+                        "tertiary-container": "#5e6163",
+                        "secondary-fixed": "#dae2fd",
+                        "on-tertiary-container": "#dadcde",
+                        "tertiary": "#46494b",
+                        "surface-container-low": "#eff4ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "surface-tint": "#4d44e3",
+                        "on-primary-container": "#dad7ff",
+                        "on-background": "#0b1c30",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-surface": "#0b1c30",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#dce9ff",
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#0f0069"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "80px",
+                        "md": "24px",
+                        "gutter": "24px",
+                        "sm": "16px",
+                        "xs": "8px",
+                        "margin": "32px",
+                        "lg": "48px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "h1": ["Manrope"],
+                        "code": ["Space Grotesk"],
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h3": ["Manrope"],
+                        "h2": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "code": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h3": ["24px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "h2": ["32px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .canvas-grid {
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-background font-body-md text-on-background min-h-screen">
+    <!-- TopAppBar -->
+    <header
+        class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none sticky top-0 z-50">
+        <div class="flex justify-between items-center h-16 px-6 max-w-7xl mx-auto">
+            <div class="flex items-center gap-8">
+                <div class="text-xl font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400 font-h2">
+                    ThaiDigit AI
+                </div>
+                <nav class="hidden md:flex items-center gap-6 font-manrope antialiased text-sm font-medium">
+                    <a class="text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 pb-4 -mb-4 transition-colors duration-200 cursor-pointer"
+                        href="predictor.html">Predictor</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200 cursor-pointer"
+                        href="history.html">History</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200 cursor-pointer"
+                        href="learn.html">Learn</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors duration-200 cursor-pointer"
+                        href="settings.html">Settings</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-indigo-500 transition-colors"
+                    data-icon="help">help</span>
+                <span
+                    class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-indigo-500 transition-colors"
+                    data-icon="account_circle">account_circle</span>
+                <a href="login.html"
+                    class="flex items-center text-slate-500 hover:text-red-500 transition-colors ml-4 border-l border-slate-300 pl-4 gap-1">
+                    <span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+                    <span class="text-sm font-medium">Logout</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="grid grid-cols-12 gap-gutter">
+            <!-- Main Interaction Column -->
+            <div class="col-span-12 lg:col-span-8 space-y-md">
+                <!-- Drawing Canvas Card -->
+                <div
+                    class="bg-white rounded-xl border border-outline-variant shadow-[0px_4px_6px_rgba(15,23,42,0.05)] overflow-hidden">
+                    <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+                        <div>
+                            <h2 class="font-h3 text-h3 text-on-background">Drawing Pad</h2>
+                            <p class="text-on-surface-variant text-body-md">Draw a Thai numeral (๐-๙) in the box below
+                            </p>
+                        </div>
+                        <div class="flex gap-xs">
+                            <button
+                                class="px-sm py-xs text-secondary border border-outline-variant rounded-lg font-label-caps uppercase hover:bg-surface-container-low transition-all active:opacity-80">
+                                <span class="material-symbols-outlined align-middle mr-1 text-[18px]"
+                                    data-icon="history">history</span> Undo
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-8 bg-surface-container-lowest">
+                        <div
+                            class="aspect-square max-w-[500px] mx-auto border-2 border-dashed border-outline-variant rounded-xl canvas-grid flex items-center justify-center relative bg-white shadow-inner group cursor-crosshair">
+                            <div
+                                class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 group-hover:opacity-10 transition-opacity">
+                                <span class="material-symbols-outlined text-[120px]" data-icon="draw">draw</span>
+                            </div>
+                            <!-- Drawing canvas -->
+                            <div class="w-full h-full relative">
+                                <canvas class="w-full h-full touch-none" height="500" id="drawingCanvas"
+                                    width="500"></canvas>
+                                <div class="absolute top-4 left-4 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 opacity-0 transition-opacity pointer-events-none"
+                                    id="drawingStatus">
+                                    <span class="relative flex h-2 w-2">
+                                        <span
+                                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                                    </span>
+                                    Drawing...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-surface-container-low flex justify-end gap-sm">
+                        <button
+                            class="px-md py-sm bg-transparent border border-outline-variant text-secondary font-manrope font-semibold rounded-lg hover:bg-white transition-all active:opacity-80 flex items-center gap-2"
+                            id="uploadBtn">
+                            <span class="material-symbols-outlined text-[20px]" data-icon="upload">upload</span> Upload
+                            File
+                        </button><input accept="image/*" class="hidden" id="fileInput" type="file" /><button
+                            class="px-md py-sm bg-transparent border border-outline-variant text-secondary font-manrope font-semibold rounded-lg hover:bg-white transition-all active:opacity-80"
+                            id="clearBtn">
+                            Clear
+                        </button>
+                        <button id="predictBtn"
+                            class="px-md py-sm bg-primary text-on-primary font-manrope font-semibold rounded-lg shadow-md hover:shadow-lg transition-all active:opacity-80 flex items-center gap-2">
+                            Predict <span class="material-symbols-outlined text-[20px]"
+                                data-icon="auto_awesome">auto_awesome</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Prediction Results Panel (Conditional Display Logic Emulated) -->
+                <div
+                    class="bg-white rounded-xl border border-outline-variant shadow-[0px_4px_6px_rgba(15,23,42,0.05)] overflow-hidden">
+                    <div class="p-md">
+                        <div class="flex items-center justify-between mb-sm">
+                            <h3 class="font-h3 text-h3">Prediction Results</h3>
+                            <div
+                                class="px-sm py-1 bg-slate-100 text-slate-600 rounded-full text-label-caps flex items-center gap-1"
+                                id="confidenceBadge">
+                                <span class="material-symbols-outlined text-[14px]" data-icon="check_circle"
+                                    data-weight="fill">check_circle</span> High Confidence
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-md items-center py-sm">
+                            <div class="text-center p-md bg-surface-container rounded-xl">
+                                <p class="font-label-caps text-on-surface-variant mb-xs">THAI NUMERAL</p>
+                                <span id="resultThai" class="text-h1 font-h1 text-primary transition-all">--</span>
+                            </div>
+                            <div class="text-center p-md border border-outline-variant rounded-xl">
+                                <p class="font-label-caps text-on-surface-variant mb-xs">ARABIC EQUIVALENT</p>
+                                <span id="resultArabic"
+                                    class="text-h1 font-h1 text-on-background transition-all">--</span>
+                            </div>
+                            <div class="text-center p-md border border-outline-variant rounded-xl">
+                                <p class="font-label-caps text-on-surface-variant mb-xs">CONFIDENCE</p>
+                                <span id="resultConfidence"
+                                    class="text-h1 font-h1 text-primary transition-all">--%</span>
+                            </div>
+                        </div>
+                        <div class="mt-md grid grid-cols-1 md:grid-cols-[220px_1fr_auto] gap-sm items-center">
+                            <label class="flex flex-col gap-1">
+                                <span class="font-label-caps text-on-surface-variant">Correct Label</span>
+                                <select id="correctLabel"
+                                    class="border border-outline-variant rounded-lg bg-white px-3 py-2 text-on-surface focus:border-primary focus:ring-primary">
+                                    <option value="0">๐ (0)</option>
+                                    <option value="1">๑ (1)</option>
+                                    <option value="2">๒ (2)</option>
+                                    <option value="3">๓ (3)</option>
+                                    <option value="4">๔ (4)</option>
+                                    <option value="5">๕ (5)</option>
+                                    <option value="6">๖ (6)</option>
+                                    <option value="7">๗ (7)</option>
+                                    <option value="8">๘ (8)</option>
+                                    <option value="9">๙ (9)</option>
+                                </select>
+                            </label>
+                            <button id="saveSampleBtn"
+                                class="flex-1 py-sm bg-primary-container text-on-primary-container font-manrope font-bold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined" data-icon="save">save</span> Save Sample
+                            </button>
+                            <button
+                                class="px-md py-sm border border-outline-variant text-on-surface-variant font-manrope font-semibold rounded-lg hover:bg-surface-container-low transition-all">
+                                <span class="material-symbols-outlined align-middle" data-icon="share">share</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar / Recent Predictions -->
+            <div class="col-span-12 lg:col-span-4 space-y-md">
+                <div
+                    class="bg-white rounded-xl border border-outline-variant shadow-[0px_4px_6px_rgba(15,23,42,0.05)] p-md">
+                    <div class="flex items-center justify-between mb-md">
+                        <h3 class="font-h3 text-h3 text-on-background">Recent Predictions</h3>
+                        <a class="text-primary font-label-caps hover:underline" href="#">View All</a>
+                    </div>
+                    <div class="space-y-sm">
+                        <!-- History Item 1 -->
+                        <div
+                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+                            <div
+                                class="w-16 h-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant">
+                                <img alt="Recent 4" class="w-full h-full object-contain p-2"
+                                    data-alt="A close-up digital thumbnail of a hand-drawn Thai numeral four which appears as a looping figure with a vertical ascender. The drawing style is consistent with a digital stylus on a light gray tablet background. The image is part of a clean, structured list in a professional data dashboard. The overall lighting is soft and neutral to maintain a corporate modern aesthetic."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTLjWBeARZx23fyCPOMSb0Yqr09u1T0NA0dOx_OHcRb3F_y1hmbPX4x05SVhoYDFn7omJBbA2TuyDQ3wfLt_YUnnRErl2PduN62fA7GJThEetxwANwfjvzaO7pV9nNEuza1nv62kIDvODgDrNQ_J2YeNh1ax7MaEeDh8JkINkvAVfQcbdE7EjYUN4Ube5UM1GT0mw8NbbF4350FpGN3yTN4dQ7rMxNLmodFpuCsyhErtL9XwJNVXSxvSLjahFsYHDBKd7oOMjvul_n" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <span class="font-h3 text-[18px]">๔ (4)</span>
+                                    <span class="text-[12px] text-on-surface-variant">2m ago</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+                                    <div class="bg-primary h-1.5 rounded-full" style="width: 99.2%"></div>
+                                </div>
+                                <span class="text-[11px] text-on-surface-variant mt-1 block">Confidence: 99.2%</span>
+                            </div>
+                        </div>
+                        <!-- History Item 2 -->
+                        <div
+                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+                            <div
+                                class="w-16 h-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant">
+                                <img alt="Recent 1" class="w-full h-full object-contain p-2"
+                                    data-alt="A digital display showing a hand-drawn Thai numeral one, characterized by a circular head and a downward stroke. The line quality is crisp and dark indigo against a subtle light-gray grid background. The composition is centered within a small square card, reflecting a high-end software history log. The lighting is flat and modern, focusing on the clarity of the AI's input data."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwSj4trHbTVi418AvXCtR4AYq3dFmchd4_b27QyueeLEMLfTsXnbprW3SNCMt5FWZAcUTr1GCbV7m_ZzLgCAkKMCaCiKZmqVEP1LjjnIKxJo_7Sf1pBvJpgFu67PLM2oH3BvPWhyFB4kJb4xTfbRJCj3yNkRFvYg_1S_NiZStGc87b6PjPdZQ-xhKCZMoeXUA1XTdv-F3up4lhHvqGvKVh9uvxvKJKGJEyZiA7KCmOMxxBIripYOC4zdMvkYkeGY-BpFItrdjEpwjx" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <span class="font-h3 text-[18px]">๑ (1)</span>
+                                    <span class="text-[12px] text-on-surface-variant">15m ago</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+                                    <div class="bg-primary h-1.5 rounded-full" style="width: 87.4%"></div>
+                                </div>
+                                <span class="text-[11px] text-on-surface-variant mt-1 block">Confidence: 87.4%</span>
+                            </div>
+                        </div>
+                        <!-- History Item 3 -->
+                        <div
+                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+                            <div
+                                class="w-16 h-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant">
+                                <img alt="Recent 7" class="w-full h-full object-contain p-2"
+                                    data-alt="A minimalist digital capture of a Thai numeral seven, drawn with a fluid, calligraphic stroke. The background is a soft light mode surface with a delicate texture. The primary color of the stroke is a deep, professional indigo. The image is presented as a preview thumbnail in a sophisticated user interface designed for machine learning analytics. Lighting is diffuse and clear."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB8sevaaKaRzPovwkryjm5BzYygASrhbg0jZSpoiUowz893Uck2UCUb1c7YSFsi-p26wYBCOEAfQRJIMYdYac_FvWKWTGFBVz461mgrCvrTm7pjxrR1jIfXgf1xlO-gVHYU4zNP_hrah2f9oPPAfitkViEEygKd2B9yrTnLwbY0matbHe-N_56YT0kccl1CiNEYFkUN1ZwGsX-RQh9TkP9eoHNqxiSoyEmVllijccnT-SKhnzRqAqJfH3SR1X3uRZCC9PhlXhecgFf" />
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start">
+                                    <span class="font-h3 text-[18px]">๕ (5)</span>
+                                    <span class="text-[12px] text-on-surface-variant">1h ago</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+                                    <div class="bg-primary h-1.5 rounded-full" style="width: 95.0%"></div>
+                                </div>
+                                <span class="text-[11px] text-on-surface-variant mt-1 block">Confidence: 95.0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AI Statistics Card -->
+                <div class="bg-gradient-to-br from-primary to-indigo-800 rounded-xl p-md text-on-primary shadow-lg">
+                    <div class="flex items-center gap-2 mb-sm">
+                        <span class="material-symbols-outlined text-white" data-icon="analytics">analytics</span>
+                        <h4 class="font-manrope font-bold uppercase text-[12px] tracking-widest">Model Performance</h4>
+                    </div>
+                    <div class="space-y-md">
+                        <div>
+                            <div class="flex justify-between items-end mb-1">
+                                <span class="text-body-md opacity-80">Global Accuracy</span>
+                                <span class="text-h3 font-h1">99.4%</span>
+                            </div>
+                            <div class="w-full bg-white/20 rounded-full h-1">
+                                <div class="bg-white h-1 rounded-full" style="width: 99.4%"></div>
+                            </div>
+                        </div>
+                        <p class="text-[13px] leading-relaxed opacity-90">
+                            NeuralNet V2.4 is currently processing predictions with invisible intelligence and
+                            professional precision.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Toast Notification -->
+    <div id="saveToast"
+        class="fixed bottom-margin right-margin z-[100] transform transition-all duration-500 opacity-0 translate-y-4 pointer-events-none">
+        <div
+            class="bg-[#242f3d] text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-4 border border-slate-700/50">
+            <span class="material-symbols-outlined text-[#34d399] text-2xl" data-icon="cloud_done"
+                data-weight="regular">cloud_done</span>
+            <div class="text-[16px] font-medium tracking-wide" id="saveToastText">Sample saved</div>
+            <button id="closeToastBtn"
+                class="ml-4 p-1 text-slate-400 hover:text-white hover:bg-white/10 rounded-md transition-colors">
+                <span class="material-symbols-outlined text-xl" data-icon="close">close</span>
+            </button>
+        </div>
+    </div>
+    <script src="api.js"></script>
+    <script>
+        ThaiDigitAPI.requireAuth();
+
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        const clearBtn = document.getElementById('clearBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const status = document.getElementById('drawingStatus');
+
+        // Toast logic
+        const saveSampleBtn = document.getElementById('saveSampleBtn');
+        const saveToast = document.getElementById('saveToast');
+        const closeToastBtn = document.getElementById('closeToastBtn');
+        const toastText = document.getElementById('saveToastText');
+        let toastTimeout;
+        let lastPixels = null;
+        let lastPrediction = null;
+
+        function showToast(message) {
+            toastText.textContent = message;
+            saveToast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            saveToast.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                saveToast.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                saveToast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 3000);
+        }
+
+        if (saveSampleBtn && saveToast) {
+            saveSampleBtn.addEventListener('click', async () => {
+                if (!lastPixels) {
+                    showToast('Predict before saving a training sample');
+                    return;
+                }
+
+                const originalText = saveSampleBtn.innerHTML;
+                saveSampleBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Saving...';
+                saveSampleBtn.disabled = true;
+
+                try {
+                    const label = document.getElementById('correctLabel').value;
+                    const response = await ThaiDigitAPI.train(lastPixels, label);
+                    showToast(response.message || 'Sample saved and model updated');
+                } catch (error) {
+                    console.error("Training API failed", error);
+                    showToast(error.message || 'Save failed');
+                } finally {
+                    saveSampleBtn.innerHTML = originalText;
+                    saveSampleBtn.disabled = false;
+                }
+            });
+
+            if (closeToastBtn) {
+                closeToastBtn.addEventListener('click', () => {
+                    clearTimeout(toastTimeout);
+                    saveToast.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    saveToast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                });
+            }
+        }
+
+        let drawing = false;
+
+        // Setup drawing styles
+        ctx.strokeStyle = '#3525cd';
+        ctx.lineWidth = 12;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        function startDrawing(e) {
+            drawing = true;
+            status.style.opacity = '1';
+            draw(e);
+        }
+
+        function stopDrawing() {
+            drawing = false;
+            status.style.opacity = '0';
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!drawing) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            let x, y;
+            if (e.touches) {
+                x = (e.touches[0].clientX - rect.left) * scaleX;
+                y = (e.touches[0].clientY - rect.top) * scaleY;
+            } else {
+                x = (e.clientX - rect.left) * scaleX;
+                y = (e.clientY - rect.top) * scaleY;
+            }
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        // Event Listeners
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+        canvas.addEventListener('touchend', stopDrawing);
+
+        // Clear Canvas
+        clearBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            lastPixels = null;
+            lastPrediction = null;
+            resultThai.innerText = '--';
+            resultArabic.innerText = '--';
+            resultConfidence.innerText = '--%';
+        });
+
+        // Upload Image to Canvas
+        uploadBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    // Draw image maintaining aspect ratio
+                    const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+                    const x = (canvas.width / 2) - (img.width / 2) * scale;
+                    const y = (canvas.height / 2) - (img.height / 2) * scale;
+                    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        const predictBtn = document.getElementById('predictBtn');
+        const resultThai = document.getElementById('resultThai');
+        const resultArabic = document.getElementById('resultArabic');
+        const resultConfidence = document.getElementById('resultConfidence');
+        const confidenceBadge = document.getElementById('confidenceBadge');
+        const correctLabel = document.getElementById('correctLabel');
+
+        if (predictBtn) {
+            predictBtn.addEventListener('click', async () => {
+                const originalText = predictBtn.innerHTML;
+                predictBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">refresh</span> Predict';
+                predictBtn.disabled = true;
+
+                try {
+                    lastPixels = ThaiDigitAPI.canvasToPixels(canvas);
+                    const response = await ThaiDigitAPI.predict(lastPixels);
+                    lastPrediction = response.prediction;
+                    const confidence = Math.round(Number(response.confidence) * 1000) / 10;
+                    resultThai.innerText = ThaiDigitAPI.thaiDigit(response.prediction);
+                    resultArabic.innerText = response.prediction;
+                    resultConfidence.innerText = `${confidence}%`;
+                    correctLabel.value = String(response.prediction);
+                    confidenceBadge.className = `px-sm py-1 rounded-full text-label-caps flex items-center gap-1 ${confidence >= 80 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`;
+                    confidenceBadge.lastChild.textContent = confidence >= 80 ? ' High Confidence' : ' Needs Review';
+
+                    resultThai.parentElement.classList.add('bg-primary/20');
+                    setTimeout(() => resultThai.parentElement.classList.remove('bg-primary/20'), 300);
+                } catch (error) {
+                    console.error("Prediction API failed", error);
+                    showToast(error.message || 'Prediction failed');
+                } finally {
+                    predictBtn.innerHTML = originalText;
+                    predictBtn.disabled = false;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
