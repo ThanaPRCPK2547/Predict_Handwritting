@@ -1,5 +1,6 @@
 import pickle
 import numpy as np
+from collections import deque
 from typing import Optional
 from river import linear_model, optim, preprocessing
 
@@ -7,6 +8,8 @@ from app.ml.preprocessing import normalize_canvas_pixels, pixels_to_feature_dict
 from app.config import get_settings
 
 settings = get_settings()
+
+_ACCURACY_WINDOW = 1000  # เก็บแค่ 1000 ตัวล่าสุด
 
 
 class RiverMLEngine:
@@ -21,7 +24,7 @@ class RiverMLEngine:
     def __init__(self):
         self.model = self._build_model()
         self._previous_state: Optional[bytes] = None
-        self._accuracy_history: list[float] = []
+        self._accuracy_history: deque = deque(maxlen=_ACCURACY_WINDOW)
 
     @staticmethod
     def _build_model():
@@ -73,7 +76,8 @@ class RiverMLEngine:
         if accuracy < settings.min_accuracy_threshold and self._previous_state:
             self.model = pickle.loads(self._previous_state)
             self._accuracy_history.pop()
-            return accuracy
+            # คืน accuracy ก่อน rollback (ค่าที่ถูกต้องของ history ที่เหลือ)
+            return self.current_accuracy
 
         return accuracy
 
