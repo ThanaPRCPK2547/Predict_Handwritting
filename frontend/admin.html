@@ -219,7 +219,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div class="flex flex-col gap-2 rounded-xl p-6 bg-surface border border-outline-variant shadow-sm">
                 <p class="text-on-surface-variant text-label-caps uppercase tracking-wider">Active Version</p>
-                <p class="text-on-surface text-2xl font-bold tracking-tight code-font">v2.4.0-PROD</p>
+                <p id="activeVersionText" class="text-on-surface text-2xl font-bold tracking-tight code-font">v2.4.0-PROD</p>
                 <div class="flex items-center gap-1 text-primary text-sm font-medium">
                   <span class="material-symbols-outlined text-sm">check_circle</span>
                   Stable Release
@@ -270,7 +270,7 @@
                   </div>
 
                   <p id="modelStatusText" class="text-[#717b8e] font-medium mt-5 text-[15px]">ยังไม่ได้อัปโหลด model
-                    ใหม่</p><input type="file" id="modelFileInput" class="hidden" accept=".h5,.onnx,.pkl" />
+                    ใหม่</p><input type="file" id="modelFileInput" class="hidden" accept=".h5,.onnx,.pkl,.keras" />
                 </div>
 
                 <!-- Real-time Preview / Metadata -->
@@ -329,83 +329,12 @@
                           Actions</th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-outline-variant">
-                      <tr class="hover:bg-surface-container-lowest transition-colors">
-                        <td class="px-6 py-4 font-bold text-on-surface code-font">v2.4.0-release</td>
-                        <td class="px-6 py-4 text-on-surface-variant text-sm">Oct 24, 2023 09:42</td>
-                        <td class="px-6 py-4">
-                          <div class="flex items-center gap-2">
-                            <div
-                              class="size-6 rounded-full bg-primary-container/20 text-primary flex items-center justify-center text-[10px] font-bold">
-                              JD</div>
-                            <span class="text-on-surface text-sm">John Doe</span>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4">
-                          <span
-                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-tight">
-                            <span class="size-1.5 rounded-full bg-emerald-500"></span>
-                            Active
-                          </span>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                          <button class="text-on-surface-variant hover:text-primary"><span
-                              class="material-symbols-outlined">more_vert</span></button>
-                        </td>
-                      </tr>
-                      <tr class="hover:bg-surface-container-lowest transition-colors">
-                        <td class="px-6 py-4 font-bold text-on-surface code-font">v2.3.1-hotfix</td>
-                        <td class="px-6 py-4 text-on-surface-variant text-sm">Oct 20, 2023 14:15</td>
-                        <td class="px-6 py-4">
-                          <div class="flex items-center gap-2">
-                            <div
-                              class="size-6 rounded-full bg-secondary-container text-secondary flex items-center justify-center text-[10px] font-bold">
-                              AS</div>
-                            <span class="text-on-surface text-sm">Anna Smith</span>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4">
-                          <span
-                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-bold uppercase tracking-tight">
-                            <span class="size-1.5 rounded-full bg-on-surface-variant"></span>
-                            Archived
-                          </span>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                          <button class="text-primary text-xs font-bold mr-4 hover:underline">Rollback</button>
-                          <button class="text-on-surface-variant hover:text-primary"><span
-                              class="material-symbols-outlined">more_vert</span></button>
-                        </td>
-                      </tr>
-                      <tr class="hover:bg-surface-container-lowest transition-colors">
-                        <td class="px-6 py-4 font-bold text-on-surface code-font">v2.3.0-rc</td>
-                        <td class="px-6 py-4 text-on-surface-variant text-sm">Oct 18, 2023 11:22</td>
-                        <td class="px-6 py-4">
-                          <div class="flex items-center gap-2">
-                            <div
-                              class="size-6 rounded-full bg-primary-container/20 text-primary flex items-center justify-center text-[10px] font-bold">
-                              JD</div>
-                            <span class="text-on-surface text-sm">John Doe</span>
-                          </div>
-                        </td>
-                        <td class="px-6 py-4">
-                          <span
-                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-xs font-bold uppercase tracking-tight">
-                            <span class="size-1.5 rounded-full bg-on-surface-variant"></span>
-                            Archived
-                          </span>
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                          <button class="text-primary text-xs font-bold mr-4 hover:underline">Rollback</button>
-                          <button class="text-on-surface-variant hover:text-primary"><span
-                              class="material-symbols-outlined">more_vert</span></button>
-                        </td>
-                      </tr>
+                    <tbody id="modelTableBody" class="divide-y divide-outline-variant">
                     </tbody>
                   </table>
                   <div
                     class="px-6 py-4 bg-surface-container-low border-t border-outline-variant flex justify-between items-center text-sm text-on-surface-variant">
-                    <span>Showing 3 of 42 deployment events</span>
+                    <span id="modelCountText">Loading...</span>
                     <div class="flex gap-2">
                       <button
                         class="px-3 py-1 bg-white border border-outline-variant rounded hover:bg-surface transition-colors disabled:opacity-50"
@@ -430,42 +359,126 @@
     const btnConfirmUpload = document.getElementById('btnConfirmUpload');
     const modelStatusText = document.getElementById('modelStatusText');
     const modelFileInput = document.getElementById('modelFileInput');
+    const modelTableBody = document.getElementById('modelTableBody');
+    const activeVersionText = document.getElementById('activeVersionText');
+    const modelCountText = document.getElementById('modelCountText');
 
-    if (btnUploadModel && modelFileInput) {
-      btnUploadModel.addEventListener('click', () => {
-        modelFileInput.click();
-      });
+    async function fetchAndRenderModels() {
+      try {
+        const models = await ThaiDigitAPI.request('/admin/models');
+        renderModelTable(models);
+        updateActiveModelCard(models);
+        if (modelCountText) modelCountText.textContent = `${models.length} deployment event${models.length !== 1 ? 's' : ''}`;
+      } catch (err) {
+        modelStatusText.innerHTML = `<span class="text-red-500">Failed to load models: ${err.message}</span>`;
+      }
+    }
 
-      modelFileInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
-          const fileName = e.target.files[0].name;
-          modelStatusText.innerHTML = `เตรียมอัปโหลดไฟล์: <span class="font-bold text-slate-800">${fileName}</span>`;
-        }
-      });
-
-      btnConfirmUpload.addEventListener('click', async () => {
-        if (!modelFileInput.files || modelFileInput.files.length === 0) {
-          alert("กรุณาเลือกไฟล์ก่อนอัปโหลด (Please select a file first)");
-          return;
-        }
-
-        const file = modelFileInput.files[0];
-        const originalText = btnConfirmUpload.innerHTML;
-        btnConfirmUpload.innerHTML = '<span class="material-symbols-outlined animate-spin text-[15px] align-middle mr-1">refresh</span> Uploading...';
-        btnConfirmUpload.disabled = true;
-
-        try {
-          await ThaiDigitAPI.request('/health', { auth: false });
-          modelStatusText.innerHTML = `<span class="text-amber-600 font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">info</span> Backend connected. Model file upload endpoint is not implemented yet.</span>`;
-        } catch (error) {
-          modelStatusText.innerHTML = `<span class="text-red-500 font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">error</span> Upload failed</span>`;
-        } finally {
-          btnConfirmUpload.innerHTML = originalText;
-          btnConfirmUpload.disabled = false;
-          modelFileInput.value = '';
-        }
+    function renderModelTable(models) {
+      modelTableBody.innerHTML = '';
+      if (!models || models.length === 0) {
+        modelTableBody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-on-surface-variant text-sm">No models deployed yet</td></tr>';
+        return;
+      }
+      models.forEach(m => {
+        const isActive = m.status === 'active';
+        const dateStr = m.uploaded_at ? new Date(m.uploaded_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-surface-container-lowest transition-colors';
+        tr.innerHTML = `
+          <td class="px-6 py-4 font-bold text-on-surface code-font">${m.version}</td>
+          <td class="px-6 py-4 text-on-surface-variant text-sm">${dateStr}</td>
+          <td class="px-6 py-4"><span class="text-on-surface text-sm">Admin</span></td>
+          <td class="px-6 py-4">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-surface-container-highest text-on-surface-variant'} text-xs font-bold uppercase tracking-tight">
+              <span class="size-1.5 rounded-full ${isActive ? 'bg-emerald-500' : 'bg-on-surface-variant'}"></span>
+              ${isActive ? 'Active' : 'Archived'}
+            </span>
+          </td>
+          <td class="px-6 py-4 text-right">
+            ${!isActive ? `<button class="btn-activate text-primary text-xs font-bold mr-4 hover:underline" data-id="${m.id}">Rollback</button>` : ''}
+            <button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
+          </td>
+        `;
+        modelTableBody.appendChild(tr);
       });
     }
+
+    function updateActiveModelCard(models) {
+      const active = models.find(m => m.status === 'active');
+      if (active && activeVersionText) {
+        activeVersionText.textContent = active.version.toUpperCase();
+      }
+    }
+
+    btnUploadModel.addEventListener('click', () => {
+      modelFileInput.click();
+    });
+
+    modelFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        const fileName = e.target.files[0].name;
+        modelStatusText.innerHTML = `เตรียมอัปโหลดไฟล์: <span class="font-bold text-slate-800">${fileName}</span>`;
+      }
+    });
+
+    btnConfirmUpload.addEventListener('click', async () => {
+      if (!modelFileInput.files || modelFileInput.files.length === 0) {
+        alert("กรุณาเลือกไฟล์ก่อนอัปโหลด (Please select a file first)");
+        return;
+      }
+
+      const file = modelFileInput.files[0];
+      const originalText = btnConfirmUpload.innerHTML;
+      btnConfirmUpload.innerHTML = '<span class="material-symbols-outlined animate-spin text-[15px] align-middle mr-1">refresh</span> Uploading...';
+      btnConfirmUpload.disabled = true;
+
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const result = await ThaiDigitAPI.request('/admin/models/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        await ThaiDigitAPI.request(`/admin/models/activate/${result.id}`, {
+          method: 'POST',
+        });
+
+        modelStatusText.innerHTML = `<span class="text-emerald-600 font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">check_circle</span> Model "${result.version}" uploaded and activated successfully!</span>`;
+        await fetchAndRenderModels();
+      } catch (error) {
+        modelStatusText.innerHTML = `<span class="text-red-500 font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">error</span> Upload failed: ${error.message}</span>`;
+      } finally {
+        btnConfirmUpload.innerHTML = originalText;
+        btnConfirmUpload.disabled = false;
+        modelFileInput.value = '';
+      }
+    });
+
+    modelTableBody.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.btn-activate');
+      if (!btn) return;
+
+      const modelId = btn.dataset.id;
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'Activating...';
+
+      try {
+        const result = await ThaiDigitAPI.request(`/admin/models/activate/${modelId}`, {
+          method: 'POST',
+        });
+        modelStatusText.innerHTML = `<span class="text-emerald-600 font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">check_circle</span> Model "${result.version}" activated!</span>`;
+        await fetchAndRenderModels();
+      } catch (error) {
+        modelStatusText.innerHTML = `<span class="text-red-500 font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">error</span> Activation failed: ${error.message}</span>`;
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    });
+
+    fetchAndRenderModels();
   </script>
 </body>
 
