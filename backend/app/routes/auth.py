@@ -12,20 +12,30 @@ class RegisterRequest(BaseModel):
     password: str
     role: str = "user"
 
+
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class RegisterResponse(BaseModel):
+    message: str
+
+
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 
-@router.post("/login")
+@router.post("/login", response_model=LoginResponse)
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == form_data.username).first()
     if not user or not user.verify_password(form_data.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = user.create_token()
-    return {"access_token": token, "token_type": "bearer"}
+    return LoginResponse(access_token=token, token_type="bearer")
 
 
-@router.post("/register")
+@router.post("/register", response_model=RegisterResponse)
 async def register(req: RegisterRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.username == req.username).first()
     if existing:
@@ -34,7 +44,7 @@ async def register(req: RegisterRequest, db: Session = Depends(get_db)):
     user.set_password(req.password)
     db.add(user)
     db.commit()
-    return {"message": "User created successfully"}
+    return RegisterResponse(message="User created successfully")
 
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):

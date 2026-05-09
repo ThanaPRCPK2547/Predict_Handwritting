@@ -38,7 +38,7 @@ def predict_digit(model, pixels: list) -> tuple:
     if (target_h, target_w) != (28, 28):
         arr = tf.image.resize(arr, (target_h, target_w))
     probs = model.predict(arr, verbose=0)[0]
-    label = int(np.argmax(probs))
-    digit = CLASS_MAP.get(label, label)
-    confidence = float(probs[label])
-    return digit, confidence
+    raw_label = int(np.argmax(probs))
+    digit = CLASS_MAP.get(raw_label, raw_label)
+    confidence = float(probs[raw_label])
+    return raw_label, digit, confidence

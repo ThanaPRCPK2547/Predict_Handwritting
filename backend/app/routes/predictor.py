@@ -1,5 +1,6 @@
 import json
 import time
+from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -18,12 +19,23 @@ class PredictRequest(BaseModel):
     canvas: dict
 
 
+class PredictResponse(BaseModel):
+    digit: int
+    label: int
+    confidence: float
+
+
 class TrainRequest(BaseModel):
     canvas: dict
     label: int
 
 
-@router.post("/predict")
+class TrainResponse(BaseModel):
+    message: str
+    predicted: int
+
+
+@router.post("/predict", response_model=PredictResponse)
 async def predict(req: PredictRequest, user: User = Depends(get_current_user),
                   db: Session = Depends(get_db)):
     pixels = req.canvas.get("pixels")
@@ -31,7 +43,7 @@ async def predict(req: PredictRequest, user: User = Depends(get_current_user),
         raise HTTPException(status_code=400, detail="Invalid pixel data")
     model = load_model()
     start = time.time()
-    digit, confidence = predict_digit(model, pixels)
+    label, digit, confidence = predict_digit(model, pixels)
     latency_ms = (time.time() - start) * 1000
 
     active_model = db.query(MLModel).filter(MLModel.status == "active").first()
@@ -45,19 +57,19 @@ async def predict(req: PredictRequest, user: User = Depends(get_current_user),
     db.add(log)
     db.commit()
 
-    return {"digit": digit, "confidence": confidence}
+    return PredictResponse(digit=digit, label=label, confidence=round(confidence, 6))
 
 
-@router.post("/train")
+@router.post("/train", response_model=TrainResponse)
 async def train(req: TrainRequest, user: User = Depends(get_current_user),
                 db: Session = Depends(get_db)):
     pixels = req.canvas.get("pixels")
     if not pixels or len(pixels) != 784:
         raise HTTPException(status_code=400, detail="Invalid pixel data")
-    if not (0 <= req.label <= 9):
-        raise HTTPException(status_code=400, detail="Label must be 0-9")
+    if not (0 <= req.label <= 5):
+        raise HTTPException(status_code=400, detail="Label must be 0-5")
     model = load_model()
-    predicted, _ = predict_digit(model, pixels)
+    _, predicted, _ = predict_digit(model, pixels)
 
     sample = TrainingSample(
         user_id=user.id,
@@ -68,4 +80,33 @@ async def train(req: TrainRequest, user: User = Depends(get_current_user),
     db.add(sample)
     db.commit()
 
-    return {"message": "Training data received", "predicted": predicted}
+    return TrainResponse(message="Training data received", predicted=predicted)
+
+
+class PredictionHistoryItem(BaseModel):
+    id: int
+    digit: int
+    confidence: float
+    latency_ms: Optional[float] = None
+    created_at: Optional[str] = None
+
+
+@router.get("/predictions/history", response_model=list[PredictionHistoryItem])
+async def get_history(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    logs = (
+        db.query(PredictionLog)
+        .filter(PredictionLog.user_id == user.id)
+        .order_by(PredictionLog.created_at.desc())
+        .limit(100)
+        .all()
+    )
+    return [
+        PredictionHistoryItem(
+            id=log.id,
+            digit=log.predicted_digit,
+            confidence=log.confidence,
+            latency_ms=log.latency_ms,
+            created_at=log.created_at.isoformat() if log.created_at else None,
+        )
+        for log in logs
+    ]

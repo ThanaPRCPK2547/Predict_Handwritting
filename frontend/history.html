@@ -166,15 +166,79 @@
                     Logs</button>
             </div>
             <div class="bg-white dark:bg-slate-800 rounded-xl border border-outline-variant dark:border-slate-700 shadow-sm overflow-hidden">
-                <div class="p-6 text-center text-on-surface-variant dark:text-slate-400">History module initialized. Log displays will
-                    appear here.</div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-container-low dark:bg-slate-800/50 border-b border-outline-variant dark:border-slate-700">
+                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">#</th>
+                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Thai</th>
+                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Arabic</th>
+                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Confidence</th>
+                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Latency</th>
+                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody" class="divide-y divide-outline-variant dark:divide-slate-700">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 bg-surface-container-low dark:bg-slate-800/30 border-t border-outline-variant dark:border-slate-700 flex justify-between items-center text-sm text-on-surface-variant dark:text-slate-400">
+                    <span id="historyCount">Loading...</span>
+                </div>
             </div>
         </div>
 
     </main>
 
     <script src="api.js"></script>
-    <script>ThaiDigitAPI.requireAuth();</script>
+    <script>
+        ThaiDigitAPI.requireAuth();
+
+        const historyTableBody = document.getElementById('historyTableBody');
+        const historyCount = document.getElementById('historyCount');
+
+        async function fetchHistory() {
+            try {
+                const logs = await ThaiDigitAPI.request('/predictions/history');
+                renderHistory(logs);
+                historyCount.textContent = `${logs.length} prediction${logs.length !== 1 ? 's' : ''}`;
+            } catch (err) {
+                historyTableBody.innerHTML = `<tr><td colspan="6" class="px-6 py-8 text-center text-red-500">Failed to load history: ${err.message}</td></tr>`;
+            }
+        }
+
+        function renderHistory(logs) {
+            historyTableBody.innerHTML = '';
+            if (!logs || logs.length === 0) {
+                historyTableBody.innerHTML = '<tr><td colspan="6" class="px-6 py-8 text-center text-on-surface-variant dark:text-slate-400">No predictions yet. <a href="predictor.html" class="text-primary dark:text-indigo-400 font-medium hover:underline">Start predicting</a></td></tr>';
+                return;
+            }
+            logs.forEach((log, i) => {
+                const dateStr = log.created_at ? new Date(log.created_at).toLocaleString() : '—';
+                const confidence = Math.round(Number(log.confidence) * 1000) / 10;
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-surface-container-low dark:hover:bg-slate-700/30 transition-colors';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 text-on-surface-variant dark:text-slate-400 text-sm">${i + 1}</td>
+                    <td class="px-6 py-4 font-bold text-on-surface dark:text-white code-font text-lg">${ThaiDigitAPI.thaiDigit(log.digit)}</td>
+                    <td class="px-6 py-4 text-on-surface dark:text-slate-200 font-semibold">${log.digit}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-24 bg-slate-100 dark:bg-slate-700 rounded-full h-2">
+                                <div class="bg-primary dark:bg-indigo-500 h-2 rounded-full" style="width: ${confidence}%"></div>
+                            </div>
+                            <span class="text-sm font-medium ${confidence >= 80 ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}">${confidence}%</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-on-surface-variant dark:text-slate-400 text-sm code-font">${log.latency_ms ? `${log.latency_ms}ms` : '—'}</td>
+                    <td class="px-6 py-4 text-on-surface-variant dark:text-slate-400 text-sm">${dateStr}</td>
+                `;
+                historyTableBody.appendChild(tr);
+            });
+        }
+
+        fetchHistory();
+    </script>
 </body>
 
 </html>

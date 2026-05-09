@@ -55,6 +55,16 @@
     return "Request failed";
   }
 
+  function guardResponse(data, expectedKeys, label) {
+    if (data && typeof data === "object") {
+      const missing = expectedKeys.filter(k => !(k in data));
+      if (missing.length) {
+        console.warn(`[${label}] API contract mismatch — missing keys:`, missing, "response:", data);
+      }
+    }
+    return data;
+  }
+
   async function request(path, options = {}) {
     const headers = { ...(options.headers || {}) };
     const hasBody = options.body !== undefined && options.body !== null;
@@ -91,18 +101,26 @@
 
   async function login(username, password) {
     const form = new URLSearchParams({ username, password });
-    const data = await request("/login", { method: "POST", body: form, auth: false });
+    const data = guardResponse(
+      await request("/login", { method: "POST", body: form, auth: false }),
+      ["access_token", "token_type"],
+      "login"
+    );
     localStorage.setItem(TOKEN_KEY, data.access_token);
     localStorage.setItem(USER_KEY, username);
     return getUser();
   }
 
   async function register(username, password, role) {
-    return request("/register", {
-      method: "POST",
-      auth: false,
-      body: { username, password, role },
-    });
+    return guardResponse(
+      await request("/register", {
+        method: "POST",
+        auth: false,
+        body: { username, password, role },
+      }),
+      ["message"],
+      "register"
+    );
   }
 
   function requireAuth(options = {}) {
@@ -150,17 +168,27 @@
   }
 
   async function predict(pixels) {
-    return request("/predict", {
-      method: "POST",
-      body: { canvas: { pixels } },
-    });
+    const data = guardResponse(
+      await request("/predict", {
+        method: "POST",
+        body: { canvas: { pixels } },
+      }),
+      ["digit", "label", "confidence"],
+      "predict"
+    );
+    return { digit: data.digit, label: data.label, confidence: data.confidence };
   }
 
   async function train(pixels, label) {
-    return request("/train", {
-      method: "POST",
-      body: { canvas: { pixels }, label: Number(label) },
-    });
+    const data = guardResponse(
+      await request("/train", {
+        method: "POST",
+        body: { canvas: { pixels }, label: Number(label) },
+      }),
+      ["message", "predicted"],
+      "train"
+    );
+    return { message: data.message, predicted: data.predicted };
   }
 
   document.addEventListener("click", (event) => {

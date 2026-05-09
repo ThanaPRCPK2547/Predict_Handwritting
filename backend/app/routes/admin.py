@@ -1,7 +1,9 @@
 import os
 from datetime import datetime, timezone
+from typing import Optional
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app import utils
@@ -11,28 +13,61 @@ from app.models.model import MLModel
 from app.routes.auth import require_admin
 from app.models.user import User
 
+
+class ModelInfo(BaseModel):
+    id: int
+    version: str
+    filename: str
+    file_type: str
+    status: str
+    accuracy: Optional[float] = None
+    uploaded_at: Optional[str] = None
+    uploader_id: Optional[int] = None
+
+
+class ModelUploadResponse(BaseModel):
+    id: int
+    version: str
+    filename: str
+    file_type: str
+    status: str
+    message: str
+
+
+class ActivateResponse(BaseModel):
+    message: str
+    id: int
+    status: str
+
+
+class StatsResponse(BaseModel):
+    total_predictions: int
+    avg_latency_ms: float
+    recent_count: int
+
+
 router = APIRouter(prefix="/admin", tags=["admin"])
 
 
-@router.get("/models")
+@router.get("/models", response_model=list[ModelInfo])
 async def list_models(user: User = Depends(require_admin), db: Session = Depends(get_db)):
     models = db.query(MLModel).order_by(MLModel.uploaded_at.desc()).all()
     return [
-        {
-            "id": m.id,
-            "version": m.version,
-            "filename": m.filename,
-            "file_type": m.file_type,
-            "status": m.status,
-            "accuracy": m.accuracy,
-            "uploaded_at": m.uploaded_at.isoformat() if m.uploaded_at else None,
-            "uploader_id": m.uploader_id,
-        }
+        ModelInfo(
+            id=m.id,
+            version=m.version,
+            filename=m.filename,
+            file_type=m.file_type,
+            status=m.status,
+            accuracy=m.accuracy,
+            uploaded_at=m.uploaded_at.isoformat() if m.uploaded_at else None,
+            uploader_id=m.uploader_id,
+        )
         for m in models
     ]
 
 
-@router.post("/models/upload")
+@router.post("/models/upload", response_model=ModelUploadResponse)
 async def upload_model(
     file: UploadFile = File(...),
     user: User = Depends(require_admin),
@@ -63,17 +98,17 @@ async def upload_model(
     db.commit()
     db.refresh(new_model)
 
-    return {
-        "id": new_model.id,
-        "version": new_model.version,
-        "filename": new_model.filename,
-        "file_type": new_model.file_type,
-        "status": new_model.status,
-        "message": "Model uploaded successfully",
-    }
+    return ModelUploadResponse(
+        id=new_model.id,
+        version=new_model.version,
+        filename=new_model.filename,
+        file_type=new_model.file_type,
+        status=new_model.status,
+        message="Model uploaded successfully",
+    )
 
 
-@router.post("/models/activate/{model_id}")
+@router.post("/models/activate/{model_id}", response_model=ActivateResponse)
 async def activate_model(
     model_id: int,
     user: User = Depends(require_admin),
@@ -89,10 +124,14 @@ async def activate_model(
 
     utils.ml._model = None
 
-    return {"message": f"Model '{model.version}' activated", "id": model.id, "status": model.status}
+    return ActivateResponse(
+        message=f"Model '{model.version}' activated",
+        id=model.id,
+        status=model.status,
+    )
 
 
-@router.get("/stats")
+@router.get("/stats", response_model=StatsResponse)
 async def get_stats(user: User = Depends(require_admin), db: Session = Depends(get_db)):
     from backend.app.models.model import PredictionLog
 
@@ -104,8 +143,8 @@ async def get_stats(user: User = Depends(require_admin), db: Session = Depends(g
         .all()
     )
     avg_latency = sum(p.latency_ms or 0 for p in latest) / len(latest) if latest else 0
-    return {
-        "total_predictions": total,
-        "avg_latency_ms": round(avg_latency, 2),
-        "recent_count": len(latest),
-    }
+    return StatsResponse(
+        total_predictions=total,
+        avg_latency_ms=round(avg_latency, 2),
+        recent_count=len(latest),
+    )

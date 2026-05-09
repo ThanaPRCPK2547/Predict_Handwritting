@@ -427,8 +427,8 @@
 
                 try {
                     const label = document.getElementById('correctLabel').value;
-                    const response = await ThaiDigitAPI.train(lastPixels, label);
-                    showToast(response.message || 'Sample saved and model updated');
+                    const { message } = await ThaiDigitAPI.train(lastPixels, label);
+                    showToast(message || 'Sample saved and model updated');
                 } catch (error) {
                     console.error("Training API failed", error);
                     showToast(error.message || 'Save failed');
@@ -544,13 +544,13 @@
 
                 try {
                     lastPixels = ThaiDigitAPI.canvasToPixels(canvas);
-                    const response = await ThaiDigitAPI.predict(lastPixels);
-                    lastPrediction = response.prediction;
-                    const confidence = Math.round(Number(response.confidence) * 1000) / 10;
-                    resultThai.innerText = ThaiDigitAPI.thaiDigit(response.prediction);
-                    resultArabic.innerText = response.prediction;
+                    const { digit, label, confidence: rawConfidence } = await ThaiDigitAPI.predict(lastPixels);
+                    lastPrediction = digit;
+                    const confidence = Math.round(Number(rawConfidence) * 1000) / 10;
+                    resultThai.innerText = ThaiDigitAPI.thaiDigit(digit);
+                    resultArabic.innerText = digit;
                     resultConfidence.innerText = `${confidence}%`;
-                    correctLabel.value = String(response.prediction);
+                    correctLabel.value = String(label);
                     confidenceBadge.className = `px-sm py-1 rounded-full text-label-caps flex items-center gap-1 ${confidence >= 80 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`;
                     confidenceBadge.lastChild.textContent = confidence >= 80 ? ' High Confidence' : ' Needs Review';
 
