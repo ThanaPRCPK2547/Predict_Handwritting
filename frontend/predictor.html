@@ -121,15 +121,16 @@
     </style>
 </head>
 
-<body class="bg-background dark:bg-slate-900 font-body-md text-on-background dark:text-slate-100 min-h-screen">
+<body class="bg-background dark:bg-slate-950 font-body-md text-on-background dark:text-slate-100 min-h-screen">
     <!-- TopAppBar -->
     <header
-        class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none sticky top-0 z-50">
+        class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none sticky top-0 z-50">
         <div class="flex justify-between items-center h-16 px-6 max-w-7xl mx-auto">
             <div class="flex items-center gap-8">
                 <div class="text-xl font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400 font-h2">
                     ThaiDigit AI
                 </div>
+                <span class="text-xs text-slate-400 dark:text-slate-500 ml-1 hidden sm:inline">beta</span>
                 <nav class="hidden md:flex items-center gap-6 font-manrope antialiased text-sm font-medium">
                     <a class="text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400 pb-4 -mb-4 transition-colors duration-200 cursor-pointer"
                         href="predictor.html">Predictor</a>
@@ -143,13 +144,13 @@
             </div>
             <div class="flex items-center gap-4">
                 <span
-                    class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-indigo-500 transition-colors"
+                    class="material-symbols-outlined text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors"
                     data-icon="help">help</span>
                 <span
-                    class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-indigo-500 transition-colors"
+                    class="material-symbols-outlined text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors"
                     data-icon="account_circle">account_circle</span>
                 <a href="login.html"
-                    class="flex items-center text-slate-500 hover:text-red-500 transition-colors ml-4 border-l border-slate-300 pl-4 gap-1">
+                    class="flex items-center text-slate-500 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-400 transition-colors ml-4 border-l border-slate-300 dark:border-slate-700 pl-4 gap-1">
                     <span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
                     <span class="text-sm font-medium">Logout</span>
                 </a>
@@ -162,24 +163,24 @@
             <div class="col-span-12 lg:col-span-8 space-y-md">
                 <!-- Drawing Canvas Card -->
                 <div
-                    class="bg-white rounded-xl border border-outline-variant shadow-[0px_4px_6px_rgba(15,23,42,0.05)] overflow-hidden">
-                    <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-outline-variant dark:border-slate-700 shadow-[0px_4px_6px_rgba(15,23,42,0.05)] overflow-hidden">
+                    <div class="p-6 border-b border-outline-variant dark:border-slate-700 flex justify-between items-center">
                         <div>
-                            <h2 class="font-h3 text-h3 text-on-background">Drawing Pad</h2>
-                            <p class="text-on-surface-variant text-body-md">Draw a Thai numeral (๐-๙) in the box below
+                            <h2 class="font-h3 text-h3 text-on-background dark:text-white">Drawing Pad</h2>
+                            <p class="text-on-surface-variant dark:text-slate-400 text-body-md">Draw a Thai numeral (๐-๙) in the box below
                             </p>
                         </div>
                         <div class="flex gap-xs">
                             <button
-                                class="px-sm py-xs text-secondary border border-outline-variant rounded-lg font-label-caps uppercase hover:bg-surface-container-low transition-all active:opacity-80">
+                                class="px-sm py-xs text-secondary dark:text-slate-300 border border-outline-variant dark:border-slate-600 rounded-lg font-label-caps uppercase hover:bg-surface-container-low dark:hover:bg-slate-700 transition-all active:opacity-80">
                                 <span class="material-symbols-outlined align-middle mr-1 text-[18px]"
                                     data-icon="history">history</span> Undo
                             </button>
                         </div>
                     </div>
-                    <div class="p-8 bg-surface-container-lowest">
+                    <div class="p-8 bg-surface-container-lowest dark:bg-slate-900/50">
                         <div
-                            class="aspect-square max-w-[500px] mx-auto border-2 border-dashed border-outline-variant rounded-xl canvas-grid flex items-center justify-center relative bg-white shadow-inner group cursor-crosshair">
+                            class="aspect-square max-w-[500px] mx-auto border-2 border-dashed border-outline-variant dark:border-slate-600 rounded-xl canvas-grid dark:bg-slate-900/30 flex items-center justify-center relative bg-white dark:bg-slate-900/20 shadow-inner group cursor-crosshair">
                             <div
                                 class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 group-hover:opacity-10 transition-opacity">
                                 <span class="material-symbols-outlined text-[120px]" data-icon="draw">draw</span>
@@ -200,14 +201,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 bg-surface-container-low flex justify-end gap-sm">
+                    <div class="p-6 bg-surface-container-low dark:bg-slate-800/80 flex justify-end gap-sm">
                         <button
-                            class="px-md py-sm bg-transparent border border-outline-variant text-secondary font-manrope font-semibold rounded-lg hover:bg-white transition-all active:opacity-80 flex items-center gap-2"
+                            class="px-md py-sm bg-transparent border border-outline-variant dark:border-slate-600 text-secondary dark:text-slate-300 font-manrope font-semibold rounded-lg hover:bg-white dark:hover:bg-slate-700 transition-all active:opacity-80 flex items-center gap-2"
                             id="uploadBtn">
                             <span class="material-symbols-outlined text-[20px]" data-icon="upload">upload</span> Upload
                             File
                         </button><input accept="image/*" class="hidden" id="fileInput" type="file" /><button
-                            class="px-md py-sm bg-transparent border border-outline-variant text-secondary font-manrope font-semibold rounded-lg hover:bg-white transition-all active:opacity-80"
+                            class="px-md py-sm bg-transparent border border-outline-variant dark:border-slate-600 text-secondary dark:text-slate-300 font-manrope font-semibold rounded-lg hover:bg-white dark:hover:bg-slate-700 transition-all active:opacity-80"
                             id="clearBtn">
                             Clear
                         </button>
@@ -220,38 +221,38 @@
                 </div>
                 <!-- Prediction Results Panel (Conditional Display Logic Emulated) -->
                 <div
-                    class="bg-white rounded-xl border border-outline-variant shadow-[0px_4px_6px_rgba(15,23,42,0.05)] overflow-hidden">
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-outline-variant dark:border-slate-700 shadow-[0px_4px_6px_rgba(15,23,42,0.05)] overflow-hidden">
                     <div class="p-md">
                         <div class="flex items-center justify-between mb-sm">
-                            <h3 class="font-h3 text-h3">Prediction Results</h3>
+                            <h3 class="font-h3 text-h3 dark:text-white">Prediction Results</h3>
                             <div
-                                class="px-sm py-1 bg-slate-100 text-slate-600 rounded-full text-label-caps flex items-center gap-1"
+                                class="px-sm py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full text-label-caps flex items-center gap-1"
                                 id="confidenceBadge">
                                 <span class="material-symbols-outlined text-[14px]" data-icon="check_circle"
                                     data-weight="fill">check_circle</span> High Confidence
                             </div>
                         </div>
                         <div class="grid grid-cols-3 gap-md items-center py-sm">
-                            <div class="text-center p-md bg-surface-container rounded-xl">
-                                <p class="font-label-caps text-on-surface-variant mb-xs">THAI NUMERAL</p>
+                            <div class="text-center p-md bg-surface-container dark:bg-slate-900/50 rounded-xl">
+                                <p class="font-label-caps text-on-surface-variant dark:text-slate-400 mb-xs">THAI NUMERAL</p>
                                 <span id="resultThai" class="text-h1 font-h1 text-primary transition-all">--</span>
                             </div>
-                            <div class="text-center p-md border border-outline-variant rounded-xl">
-                                <p class="font-label-caps text-on-surface-variant mb-xs">ARABIC EQUIVALENT</p>
+                            <div class="text-center p-md border border-outline-variant dark:border-slate-700 rounded-xl">
+                                <p class="font-label-caps text-on-surface-variant dark:text-slate-400 mb-xs">ARABIC EQUIVALENT</p>
                                 <span id="resultArabic"
-                                    class="text-h1 font-h1 text-on-background transition-all">--</span>
+                                    class="text-h1 font-h1 text-on-background dark:text-white transition-all">--</span>
                             </div>
-                            <div class="text-center p-md border border-outline-variant rounded-xl">
-                                <p class="font-label-caps text-on-surface-variant mb-xs">CONFIDENCE</p>
+                            <div class="text-center p-md border border-outline-variant dark:border-slate-700 rounded-xl">
+                                <p class="font-label-caps text-on-surface-variant dark:text-slate-400 mb-xs">CONFIDENCE</p>
                                 <span id="resultConfidence"
                                     class="text-h1 font-h1 text-primary transition-all">--%</span>
                             </div>
                         </div>
                         <div class="mt-md grid grid-cols-1 md:grid-cols-[220px_1fr_auto] gap-sm items-center">
                             <label class="flex flex-col gap-1">
-                                <span class="font-label-caps text-on-surface-variant">Correct Label</span>
+                                <span class="font-label-caps text-on-surface-variant dark:text-slate-400">Correct Label</span>
                                 <select id="correctLabel"
-                                    class="border border-outline-variant rounded-lg bg-white px-3 py-2 text-on-surface focus:border-primary focus:ring-primary">
+                                    class="border border-outline-variant dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 px-3 py-2 text-on-surface dark:text-white focus:border-primary focus:ring-primary">
                                     <option value="0">๑๐ (10)</option>
                                     <option value="1">๑๑ (11)</option>
                                     <option value="2">๑๒ (12)</option>
@@ -261,11 +262,11 @@
                                 </select>
                             </label>
                             <button id="saveSampleBtn"
-                                class="flex-1 py-sm bg-primary-container text-on-primary-container font-manrope font-bold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
+                                class="flex-1 py-sm bg-primary-container dark:bg-indigo-700 text-on-primary-container dark:text-white font-manrope font-bold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined" data-icon="save">save</span> Save Sample
                             </button>
                             <button
-                                class="px-md py-sm border border-outline-variant text-on-surface-variant font-manrope font-semibold rounded-lg hover:bg-surface-container-low transition-all">
+                                class="px-md py-sm border border-outline-variant dark:border-slate-600 text-on-surface-variant dark:text-slate-400 font-manrope font-semibold rounded-lg hover:bg-surface-container-low dark:hover:bg-slate-700 transition-all">
                                 <span class="material-symbols-outlined align-middle" data-icon="share">share</span>
                             </button>
                         </div>
@@ -275,76 +276,76 @@
             <!-- Sidebar / Recent Predictions -->
             <div class="col-span-12 lg:col-span-4 space-y-md">
                 <div
-                    class="bg-white rounded-xl border border-outline-variant shadow-[0px_4px_6px_rgba(15,23,42,0.05)] p-md">
+                    class="bg-white dark:bg-slate-800 rounded-xl border border-outline-variant dark:border-slate-700 shadow-[0px_4px_6px_rgba(15,23,42,0.05)] p-md">
                     <div class="flex items-center justify-between mb-md">
-                        <h3 class="font-h3 text-h3 text-on-background">Recent Predictions</h3>
-                        <a class="text-primary font-label-caps hover:underline" href="#">View All</a>
+                        <h3 class="font-h3 text-h3 text-on-background dark:text-white">Recent Predictions</h3>
+                        <a class="text-primary dark:text-indigo-400 font-label-caps hover:underline" href="#">View All</a>
                     </div>
                     <div class="space-y-sm">
                         <!-- History Item 1 -->
                         <div
-                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low dark:hover:bg-slate-700/50 transition-colors cursor-pointer border border-transparent hover:border-outline-variant dark:hover:border-slate-600">
                             <div
-                                class="w-16 h-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant">
+                                class="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant dark:border-slate-600">
                                 <img alt="Recent 4" class="w-full h-full object-contain p-2"
                                     data-alt="A close-up digital thumbnail of a hand-drawn Thai numeral four which appears as a looping figure with a vertical ascender. The drawing style is consistent with a digital stylus on a light gray tablet background. The image is part of a clean, structured list in a professional data dashboard. The overall lighting is soft and neutral to maintain a corporate modern aesthetic."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTLjWBeARZx23fyCPOMSb0Yqr09u1T0NA0dOx_OHcRb3F_y1hmbPX4x05SVhoYDFn7omJBbA2TuyDQ3wfLt_YUnnRErl2PduN62fA7GJThEetxwANwfjvzaO7pV9nNEuza1nv62kIDvODgDrNQ_J2YeNh1ax7MaEeDh8JkINkvAVfQcbdE7EjYUN4Ube5UM1GT0mw8NbbF4350FpGN3yTN4dQ7rMxNLmodFpuCsyhErtL9XwJNVXSxvSLjahFsYHDBKd7oOMjvul_n" />
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start">
-                                    <span class="font-h3 text-[18px]">๔ (4)</span>
-                                    <span class="text-[12px] text-on-surface-variant">2m ago</span>
+                                    <span class="font-h3 text-[18px] dark:text-slate-200">๔ (4)</span>
+                                    <span class="text-[12px] text-on-surface-variant dark:text-slate-500">2m ago</span>
                                 </div>
-                                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+                                <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 mt-2">
                                     <div class="bg-primary h-1.5 rounded-full" style="width: 99.2%"></div>
                                 </div>
-                                <span class="text-[11px] text-on-surface-variant mt-1 block">Confidence: 99.2%</span>
+                                <span class="text-[11px] text-on-surface-variant dark:text-slate-500 mt-1 block">Confidence: 99.2%</span>
                             </div>
                         </div>
                         <!-- History Item 2 -->
                         <div
-                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low dark:hover:bg-slate-700/50 transition-colors cursor-pointer border border-transparent hover:border-outline-variant dark:hover:border-slate-600">
                             <div
-                                class="w-16 h-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant">
+                                class="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant dark:border-slate-600">
                                 <img alt="Recent 1" class="w-full h-full object-contain p-2"
                                     data-alt="A digital display showing a hand-drawn Thai numeral one, characterized by a circular head and a downward stroke. The line quality is crisp and dark indigo against a subtle light-gray grid background. The composition is centered within a small square card, reflecting a high-end software history log. The lighting is flat and modern, focusing on the clarity of the AI's input data."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwSj4trHbTVi418AvXCtR4AYq3dFmchd4_b27QyueeLEMLfTsXnbprW3SNCMt5FWZAcUTr1GCbV7m_ZzLgCAkKMCaCiKZmqVEP1LjjnIKxJo_7Sf1pBvJpgFu67PLM2oH3BvPWhyFB4kJb4xTfbRJCj3yNkRFvYg_1S_NiZStGc87b6PjPdZQ-xhKCZMoeXUA1XTdv-F3up4lhHvqGvKVh9uvxvKJKGJEyZiA7KCmOMxxBIripYOC4zdMvkYkeGY-BpFItrdjEpwjx" />
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start">
-                                    <span class="font-h3 text-[18px]">๑ (1)</span>
-                                    <span class="text-[12px] text-on-surface-variant">15m ago</span>
+                                    <span class="font-h3 text-[18px] dark:text-slate-200">๑ (1)</span>
+                                    <span class="text-[12px] text-on-surface-variant dark:text-slate-500">15m ago</span>
                                 </div>
-                                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+                                <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 mt-2">
                                     <div class="bg-primary h-1.5 rounded-full" style="width: 87.4%"></div>
                                 </div>
-                                <span class="text-[11px] text-on-surface-variant mt-1 block">Confidence: 87.4%</span>
+                                <span class="text-[11px] text-on-surface-variant dark:text-slate-500 mt-1 block">Confidence: 87.4%</span>
                             </div>
                         </div>
                         <!-- History Item 3 -->
                         <div
-                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer border border-transparent hover:border-outline-variant">
+                            class="flex items-center gap-sm p-sm rounded-lg hover:bg-surface-container-low dark:hover:bg-slate-700/50 transition-colors cursor-pointer border border-transparent hover:border-outline-variant dark:hover:border-slate-600">
                             <div
-                                class="w-16 h-16 bg-slate-100 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant">
+                                class="w-16 h-16 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden flex-shrink-0 border border-outline-variant dark:border-slate-600">
                                 <img alt="Recent 7" class="w-full h-full object-contain p-2"
                                     data-alt="A minimalist digital capture of a Thai numeral seven, drawn with a fluid, calligraphic stroke. The background is a soft light mode surface with a delicate texture. The primary color of the stroke is a deep, professional indigo. The image is presented as a preview thumbnail in a sophisticated user interface designed for machine learning analytics. Lighting is diffuse and clear."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB8sevaaKaRzPovwkryjm5BzYygASrhbg0jZSpoiUowz893Uck2UCUb1c7YSFsi-p26wYBCOEAfQRJIMYdYac_FvWKWTGFBVz461mgrCvrTm7pjxrR1jIfXgf1xlO-gVHYU4zNP_hrah2f9oPPAfitkViEEygKd2B9yrTnLwbY0matbHe-N_56YT0kccl1CiNEYFkUN1ZwGsX-RQh9TkP9eoHNqxiSoyEmVllijccnT-SKhnzRqAqJfH3SR1X3uRZCC9PhlXhecgFf" />
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start">
-                                    <span class="font-h3 text-[18px]">๕ (5)</span>
-                                    <span class="text-[12px] text-on-surface-variant">1h ago</span>
+                                    <span class="font-h3 text-[18px] dark:text-slate-200">๕ (5)</span>
+                                    <span class="text-[12px] text-on-surface-variant dark:text-slate-500">1h ago</span>
                                 </div>
-                                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+                                <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 mt-2">
                                     <div class="bg-primary h-1.5 rounded-full" style="width: 95.0%"></div>
                                 </div>
-                                <span class="text-[11px] text-on-surface-variant mt-1 block">Confidence: 95.0%</span>
+                                <span class="text-[11px] text-on-surface-variant dark:text-slate-500 mt-1 block">Confidence: 95.0%</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- AI Statistics Card -->
-                <div class="bg-gradient-to-br from-primary to-indigo-800 rounded-xl p-md text-on-primary shadow-lg">
+                <div class="bg-gradient-to-br from-primary to-indigo-800 dark:from-indigo-600 dark:to-slate-900 rounded-xl p-md text-on-primary dark:text-white shadow-lg">
                     <div class="flex items-center gap-2 mb-sm">
                         <span class="material-symbols-outlined text-white" data-icon="analytics">analytics</span>
                         <h4 class="font-manrope font-bold uppercase text-[12px] tracking-widest">Model Performance</h4>
@@ -372,7 +373,7 @@
     <div id="saveToast"
         class="fixed bottom-margin right-margin z-[100] transform transition-all duration-500 opacity-0 translate-y-4 pointer-events-none">
         <div
-            class="bg-[#242f3d] text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-4 border border-slate-700/50">
+            class="bg-[#242f3d] dark:bg-slate-800 text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-4 border border-slate-700/50 dark:border-slate-600/50">
             <span class="material-symbols-outlined text-[#34d399] text-2xl" data-icon="cloud_done"
                 data-weight="regular">cloud_done</span>
             <div class="text-[16px] font-medium tracking-wide" id="saveToastText">Sample saved</div>
