@@ -23,11 +23,13 @@ class PredictResponse(BaseModel):
     digit: int
     label: int
     confidence: float
+    prediction_id: int
 
 
 class TrainRequest(BaseModel):
     canvas: dict
     label: int
+    prediction_id: Optional[int] = None
 
 
 class TrainResponse(BaseModel):
@@ -57,7 +59,7 @@ async def predict(req: PredictRequest, user: User = Depends(get_current_user),
     db.add(log)
     db.commit()
 
-    return PredictResponse(digit=digit, label=label, confidence=round(confidence, 6))
+    return PredictResponse(digit=digit, label=label, confidence=round(confidence, 6), prediction_id=log.id)
 
 
 @router.post("/train", response_model=TrainResponse)
@@ -78,6 +80,15 @@ async def train(req: TrainRequest, user: User = Depends(get_current_user),
         predicted_digit=predicted,
     )
     db.add(sample)
+
+    if req.prediction_id is not None:
+        prediction_log = db.query(PredictionLog).filter(
+            PredictionLog.id == req.prediction_id,
+            PredictionLog.user_id == user.id,
+        ).first()
+        if prediction_log:
+            prediction_log.correct_label = req.label + 10
+
     db.commit()
 
     return TrainResponse(message="Training data received", predicted=predicted)
@@ -87,7 +98,7 @@ class PredictionHistoryItem(BaseModel):
     id: int
     digit: int
     confidence: float
-    latency_ms: Optional[float] = None
+    correct_label: Optional[int] = None
     created_at: Optional[str] = None
 
 
@@ -105,7 +116,7 @@ async def get_history(user: User = Depends(get_current_user), db: Session = Depe
             id=log.id,
             digit=log.predicted_digit,
             confidence=log.confidence,
-            latency_ms=log.latency_ms,
+            correct_label=log.correct_label,
             created_at=log.created_at.isoformat() if log.created_at else None,
         )
         for log in logs

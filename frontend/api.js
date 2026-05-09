@@ -173,18 +173,17 @@
         method: "POST",
         body: { canvas: { pixels } },
       }),
-      ["digit", "label", "confidence"],
+      ["digit", "label", "confidence", "prediction_id"],
       "predict"
     );
-    return { digit: data.digit, label: data.label, confidence: data.confidence };
+    return { digit: data.digit, label: data.label, confidence: data.confidence, prediction_id: data.prediction_id };
   }
 
-  async function train(pixels, label) {
+  async function train(pixels, label, predictionId) {
+    const body = { canvas: { pixels }, label: Number(label) };
+    if (predictionId !== undefined) body.prediction_id = predictionId;
     const data = guardResponse(
-      await request("/train", {
-        method: "POST",
-        body: { canvas: { pixels }, label: Number(label) },
-      }),
+      await request("/train", { method: "POST", body }),
       ["message", "predicted"],
       "train"
     );

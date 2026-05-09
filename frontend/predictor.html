@@ -402,6 +402,7 @@
         let toastTimeout;
         let lastPixels = null;
         let lastPrediction = null;
+        let lastPredictionId = null;
 
         function showToast(message) {
             toastText.textContent = message;
@@ -427,7 +428,7 @@
 
                 try {
                     const label = document.getElementById('correctLabel').value;
-                    const { message } = await ThaiDigitAPI.train(lastPixels, label);
+                    const { message } = await ThaiDigitAPI.train(lastPixels, label, lastPredictionId);
                     showToast(message || 'Sample saved and model updated');
                 } catch (error) {
                     console.error("Training API failed", error);
@@ -503,6 +504,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             lastPixels = null;
             lastPrediction = null;
+            lastPredictionId = null;
             resultThai.innerText = '--';
             resultArabic.innerText = '--';
             resultConfidence.innerText = '--%';
@@ -544,8 +546,9 @@
 
                 try {
                     lastPixels = ThaiDigitAPI.canvasToPixels(canvas);
-                    const { digit, label, confidence: rawConfidence } = await ThaiDigitAPI.predict(lastPixels);
+                    const { digit, label, confidence: rawConfidence, prediction_id } = await ThaiDigitAPI.predict(lastPixels);
                     lastPrediction = digit;
+                    lastPredictionId = prediction_id;
                     const confidence = Math.round(Number(rawConfidence) * 1000) / 10;
                     resultThai.innerText = ThaiDigitAPI.thaiDigit(digit);
                     resultArabic.innerText = digit;

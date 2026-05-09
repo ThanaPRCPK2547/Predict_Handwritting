@@ -29,6 +29,7 @@ class PredictionLog(Base):
     confidence = Column(Float, nullable=False)
     model_id = Column(Integer, ForeignKey("models.id"), nullable=True)
     latency_ms = Column(Float, nullable=True)
+    correct_label = Column(Integer, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
 

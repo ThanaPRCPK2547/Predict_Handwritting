@@ -174,7 +174,7 @@
                                 <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Thai</th>
                                 <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Arabic</th>
                                 <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Confidence</th>
-                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Latency</th>
+                                <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Correct</th>
                                 <th class="px-6 py-4 text-label-caps text-on-surface-variant dark:text-slate-400 font-bold uppercase">Timestamp</th>
                             </tr>
                         </thead>
@@ -230,7 +230,7 @@
                             <span class="text-sm font-medium ${confidence >= 80 ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}">${confidence}%</span>
                         </div>
                     </td>
-                    <td class="px-6 py-4 text-on-surface-variant dark:text-slate-400 text-sm code-font">${log.latency_ms ? `${log.latency_ms}ms` : '—'}</td>
+                    <td class="px-6 py-4 text-on-surface-variant dark:text-slate-400 text-sm font-medium">${log.correct_label !== null ? `${ThaiDigitAPI.thaiDigit(log.correct_label)} (${log.correct_label})` : '—'}</td>
                     <td class="px-6 py-4 text-on-surface-variant dark:text-slate-400 text-sm">${dateStr}</td>
                 `;
                 historyTableBody.appendChild(tr);
