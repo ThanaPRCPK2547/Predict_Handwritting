@@ -1,4 +1,8 @@
 (function () {
+  if (localStorage.getItem("darkMode") === "true") {
+    document.documentElement.classList.add("dark");
+  }
+
   const TOKEN_KEY = "thaiDigitToken";
   const USER_KEY = "thaiDigitUser";
   const API_BASE = localStorage.getItem("thaiDigitApiBase")
