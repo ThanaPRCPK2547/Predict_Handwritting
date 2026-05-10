@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy import Column, Integer, String, Float, Text, DateTime, ForeignKey
 
-from app.database import Base
+from ..database import Base
 
 
 class MLModel(Base):

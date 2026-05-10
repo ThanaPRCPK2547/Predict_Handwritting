@@ -6,12 +6,12 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from app import utils
-from app.config import MODELS_DIR
-from app.database import get_db
-from app.models.model import MLModel
-from app.routes.auth import require_admin
-from app.models.user import User
+from .. import utils
+from ..config import MODELS_DIR
+from ..database import get_db
+from ..models.model import MLModel
+from ..routes.auth import require_admin
+from ..models.user import User
 
 
 class ModelInfo(BaseModel):
@@ -133,7 +133,7 @@ async def activate_model(
 
 @router.get("/stats", response_model=StatsResponse)
 async def get_stats(user: User = Depends(require_admin), db: Session = Depends(get_db)):
-    from backend.app.models.model import PredictionLog
+    from ..models.model import PredictionLog
 
     total = db.query(PredictionLog).count()
     latest = (

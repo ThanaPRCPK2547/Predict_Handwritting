@@ -2,7 +2,7 @@ import numpy as np
 from tensorflow import keras
 import tensorflow as tf
 
-from app.config import MODEL_PATH
+from ..config import MODEL_PATH
 
 CLASS_MAP = {0: 10, 1: 11, 2: 12, 3: 13, 4: 14, 5: 15}
 _model = None
@@ -19,8 +19,8 @@ def load_model():
 
 
 def _get_active_model_path():
-    from app.database import SessionLocal
-    from app.models.model import MLModel
+    from ..database import SessionLocal
+    from ..models.model import MLModel
 
     db = SessionLocal()
     try:

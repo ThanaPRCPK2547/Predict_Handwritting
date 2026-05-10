@@ -3,6 +3,8 @@ uvicorn
 sqlalchemy
 bcrypt
 python-jose[cryptography]
+python-multipart
+python-dotenv
 numpy
 tensorflow
 PyJWT

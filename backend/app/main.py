@@ -5,10 +5,10 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import MODEL_PATH, PROJECT_ROOT
-from app.database import SessionLocal, init_db
-from app.models.model import MLModel
-from app.routes import admin, auth, predictor
+from .config import MODEL_PATH, PROJECT_ROOT
+from .database import SessionLocal, init_db
+from .models.model import MLModel
+from .routes import admin, auth, predictor
 
 FRONTEND_DIR = os.path.join(PROJECT_ROOT, "frontend")
 

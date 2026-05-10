@@ -5,8 +5,8 @@ import jwt  # PyJWT library for token encoding/decoding
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import Session
 
-from app.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from app.database import Base
+from ..config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from ..database import Base
 
 
 class User(Base):
