@@ -1,10 +1,9 @@
 fastapi
-uvicorn
+uvicorn[standard]
 sqlalchemy
 bcrypt
-python-jose[cryptography]
 python-multipart
 python-dotenv
 numpy
-tensorflow
+tensorflow-cpu
 PyJWT

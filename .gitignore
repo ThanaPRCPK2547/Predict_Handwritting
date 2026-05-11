@@ -3,6 +3,7 @@ __pycache__/
 .env
 *.db
 *.keras
+!ml/models/*.keras
 .DS_Store
 venv/
 .venv/
