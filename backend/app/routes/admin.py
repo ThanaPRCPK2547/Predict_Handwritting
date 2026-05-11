@@ -37,6 +37,7 @@ class ModelUploadResponse(BaseModel):
 class ActivateResponse(BaseModel):
     message: str
     id: int
+    version: str
     status: str
 
 
@@ -127,6 +128,7 @@ async def activate_model(
     return ActivateResponse(
         message=f"Model '{model.version}' activated",
         id=model.id,
+        version=model.version,
         status=model.status,
     )
 

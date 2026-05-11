@@ -245,21 +245,10 @@
                   selectFileBtn.parentNode.replaceChild(newBtn, selectFileBtn);
 
 
-                  newBtn.addEventListener('click', async () => {
-                    newBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm mr-2">refresh</span> Uploading...';
-                    newBtn.disabled = true;
-                    newBtn.classList.add('opacity-80');
-
-                    try {
-                      await ThaiDigitAPI.request('/health', { auth: false });
-                      uploadTitle.innerText = "Backend Connected";
-                      uploadDesc.innerText = "Dataset upload endpoint is not implemented yet.";
-                      newBtn.style.display = "none";
-                    } catch (error) {
-                      uploadTitle.innerText = "Upload Failed";
-                      newBtn.innerHTML = "Retry Upload";
-                      newBtn.disabled = false;
-                    }
+                  newBtn.addEventListener('click', () => {
+                    uploadTitle.innerText = "Not Implemented";
+                    uploadDesc.innerText = "Dataset upload to server is not yet available.";
+                    newBtn.style.display = "none";
                   });
                 }
               });
