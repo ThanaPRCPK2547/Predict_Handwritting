@@ -93,7 +93,10 @@
       : await response.text();
 
     if (!response.ok) {
-      if (response.status === 401) logout();
+      if (response.status === 401) {
+        logout();
+        throw new Error("Session expired or missing. Please sign in again.");
+      }
       throw new Error(normalizeError(data.detail || data));
     }
     return data;

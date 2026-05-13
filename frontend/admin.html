@@ -354,7 +354,10 @@
 
   <script src="api.js"></script>
   <script>
-    ThaiDigitAPI.requireAuth({ admin: true });
+    const adminUser = ThaiDigitAPI.requireAuth({ admin: true });
+    if (!adminUser) {
+      throw new Error('Admin authentication required');
+    }
 
     const btnUploadModel = document.getElementById('btnUploadModel');
     const btnConfirmUpload = document.getElementById('btnConfirmUpload');
